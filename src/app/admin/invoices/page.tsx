@@ -11,6 +11,8 @@ import { Badge } from '@/components/ui/badge'
 import { format } from 'date-fns'
 import { CreateInvoiceButton } from './create-invoice-button'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminInvoicesPage() {
   const invoices = await prisma.invoice.findMany({
     include: {

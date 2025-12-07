@@ -2,6 +2,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Calendar, DollarSign, Users, TrendingUp } from 'lucide-react'
 import prisma from '@/lib/prisma'
 
+export const dynamic = 'force-dynamic'
+
 async function getStats() {
   const totalBookings = await prisma.booking.count()
   const totalCustomers = await prisma.customer.count()

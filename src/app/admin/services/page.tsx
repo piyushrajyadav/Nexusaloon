@@ -10,6 +10,8 @@ import {
 import { AddServiceButton } from './add-button'
 import { DeleteServiceButton } from './delete-button'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminServicesPage() {
   const services = await prisma.service.findMany({
     orderBy: { name: 'asc' }
