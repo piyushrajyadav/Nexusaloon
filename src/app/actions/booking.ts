@@ -105,7 +105,7 @@ export async function getAvailableSlots(date: Date, staffId: string, serviceDura
     if (isBefore(end, slotEnd)) break
 
     // Check for collisions
-    const isBusy = bookings.some((booking: any) => {
+    const isBusy = bookings.some((booking: { startTime: Date; endTime: Date }) => {
       const bookingStart = new Date(booking.startTime)
       const bookingEnd = new Date(booking.endTime)
       
