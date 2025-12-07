@@ -19,7 +19,7 @@ export default async function AdminStaffPage() {
           <Card key={staff.id}>
             <CardHeader className="flex flex-row items-center gap-4">
               <Avatar className="h-12 w-12">
-                <AvatarImage src={staff.imageUrl || ''} />
+                <AvatarImage src={''} />
                 <AvatarFallback>{staff.name.substring(0, 2).toUpperCase()}</AvatarFallback>
               </Avatar>
               <div>
@@ -30,12 +30,12 @@ export default async function AdminStaffPage() {
             <CardContent>
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm text-gray-500">Status</span>
-                <Badge variant={staff.isAvailable ? 'default' : 'secondary'}>
-                  {staff.isAvailable ? 'Available' : 'Unavailable'}
+                <Badge variant={staff.isActive ? 'default' : 'secondary'}>
+                  {staff.isActive ? 'Active' : 'Inactive'}
                 </Badge>
               </div>
               <div className="text-sm text-gray-500">
-                {staff.bio || 'No bio available'}
+                Phone: {staff.phone || 'N/A'}
               </div>
             </CardContent>
           </Card>
