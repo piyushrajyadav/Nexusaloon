@@ -18,10 +18,13 @@ import { Plus, Loader2 } from 'lucide-react'
 import { createManualInvoice, getCustomersAndServices } from './actions'
 import { useToast } from '@/components/ui/use-toast'
 
+type Customer = { id: string; name: string }
+type Service = { id: string; name: string }
+
 export function CreateInvoiceButton() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState<{ customers: any[], services: any[] }>({ customers: [], services: [] })
+  const [data, setData] = useState<{ customers: Customer[], services: Service[] }>({ customers: [], services: [] })
   const { toast } = useToast()
 
   useEffect(() => {

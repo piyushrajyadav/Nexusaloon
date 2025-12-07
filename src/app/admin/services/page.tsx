@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Button } from '@/components/ui/button'
 import { AddServiceButton } from './add-button'
 import { DeleteServiceButton } from './delete-button'
 
@@ -40,7 +39,7 @@ export default async function AdminServicesPage() {
                 <TableCell className="font-medium">{service.name}</TableCell>
                 <TableCell>{service.category}</TableCell>
                 <TableCell>{service.duration} mins</TableCell>
-                <TableCell className="text-right">${service.price}</TableCell>
+                <TableCell className="text-right">${Number(service.price).toFixed(2)}</TableCell>
                 <TableCell className="text-right">
                   <DeleteServiceButton id={service.id} />
                 </TableCell>

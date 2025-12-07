@@ -34,7 +34,7 @@ export async function createService(formData: FormData) {
     revalidatePath('/admin/services')
     revalidatePath('/services')
     return { success: true }
-  } catch (error) {
+  } catch {
     return { error: 'Failed to create service' }
   }
 }
@@ -47,7 +47,7 @@ export async function deleteService(id: string) {
     revalidatePath('/admin/services')
     revalidatePath('/services')
     return { success: true }
-  } catch (error) {
+  } catch {
     return { error: 'Failed to delete service' }
   }
 }

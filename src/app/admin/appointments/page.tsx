@@ -37,7 +37,7 @@ export default function AppointmentsPage() {
   }, [])
 
   const handleStatusChange = async (id: string, status: string) => {
-    await updateBookingStatus(id, status as any)
+    await updateBookingStatus(id, status as BookingStatus)
     setAppointments(appointments.map(a => a.id === id ? { ...a, status } : a))
     toast.success(`Booking marked as ${status}`)
   }

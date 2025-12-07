@@ -40,7 +40,7 @@ export default function InventoryClient({ initialProducts }: InventoryClientProp
   const [isStockDialogOpen, setIsStockDialogOpen] = useState(false)
   const [isHistoryDialogOpen, setIsHistoryDialogOpen] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const [stockHistory, setStockHistory] = useState<any[]>([])
+  const [stockHistory, setStockHistory] = useState<Array<{ id: string; quantity: number; type: StockType; notes: string | null; createdAt: Date }>>([])
   const [isLoading, setIsLoading] = useState(false)
   const [showLowStockOnly, setShowLowStockOnly] = useState(false)
 
@@ -103,7 +103,7 @@ export default function InventoryClient({ initialProducts }: InventoryClientProp
       } else {
         toast.error("Failed to create product")
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred")
     } finally {
       setIsLoading(false)
