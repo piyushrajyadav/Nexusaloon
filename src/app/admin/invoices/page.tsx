@@ -32,7 +32,7 @@ export default async function AdminInvoicesPage() {
         <h1 className="text-3xl font-bold">Invoices</h1>
         <CreateInvoiceButton />
       </div>
-      
+
       <div className="rounded-md border bg-white">
         <Table>
           <TableHeader>
@@ -43,6 +43,7 @@ export default async function AdminInvoicesPage() {
               <TableHead>Service</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Total</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -61,13 +62,18 @@ export default async function AdminInvoicesPage() {
                   <TableCell>{invoice.booking?.service.name || 'N/A'}</TableCell>
                   <TableCell>
                     <Badge variant={
-                      invoice.status === 'PAID' ? 'default' : 
-                      invoice.status === 'PENDING' ? 'secondary' : 'destructive'
+                      invoice.status === 'PAID' ? 'default' :
+                        invoice.status === 'PENDING' ? 'secondary' : 'destructive'
                     }>
                       {invoice.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-right">${Number(invoice.totalAmount).toFixed(2)}</TableCell>
+                  <TableCell className="text-right">₹{Number(invoice.totalAmount).toFixed(2)}</TableCell>
+                  <TableCell className="text-right">
+                    <a href={`/admin/invoices/${invoice.id}`} className="text-blue-600 hover:underline">
+                      View
+                    </a>
+                  </TableCell>
                 </TableRow>
               ))
             )}

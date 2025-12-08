@@ -2,17 +2,19 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { 
-  LayoutDashboard, 
-  Calendar, 
-  Scissors, 
-  Users, 
-  Package, 
-  FileText, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Calendar,
+  Scissors,
+  Users,
+  Package,
+  FileText,
+  Settings,
   LogOut,
   Menu,
-  X
+  X,
+  TrendingUp,
+  Gift
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
@@ -27,6 +29,8 @@ const sidebarItems = [
   { icon: Users, label: 'Customers', href: '/admin/customers' },
   { icon: Package, label: 'Inventory', href: '/admin/inventory' },
   { icon: FileText, label: 'Invoices', href: '/admin/invoices' },
+  { icon: TrendingUp, label: 'Analytics', href: '/admin/analytics' },
+  { icon: Gift, label: 'Offers', href: '/admin/offers' },
   { icon: Settings, label: 'Settings', href: '/admin/settings' },
 ]
 
@@ -44,10 +48,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-slate-100 flex">
       {/* Sidebar */}
-      <aside 
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:relative lg:translate-x-0`}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 text-white transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          } lg:relative lg:translate-x-0`}
       >
         <div className="h-full flex flex-col">
           <div className="p-6 flex items-center justify-between">
@@ -62,11 +65,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               const isActive = pathname === item.href
               return (
                 <Link key={item.href} href={item.href}>
-                  <div className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'text-slate-400 hover:bg-slate-800 hover:text-white'
-                  }`}>
+                  <div className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                    }`}>
                     <item.icon size={20} />
                     <span className="font-medium">{item.label}</span>
                   </div>
@@ -76,8 +78,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </nav>
 
           <div className="p-4 border-t border-slate-800">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-800"
               onClick={handleSignOut}
             >

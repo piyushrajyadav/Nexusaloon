@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { z } from 'zod'
 
 const ServiceSchema = z.object({
@@ -29,10 +29,12 @@ export async function createService(formData: FormData) {
 
   try {
     await prisma.service.create({
-      data: validatedFields.data,
+      data: { ...validatedFields.data, isActive: true },
     })
     revalidatePath('/admin/services')
     revalidatePath('/services')
+    revalidatePath('/book')
+    revalidateTag('services')
     return { success: true }
   } catch {
     return { error: 'Failed to create service' }
@@ -46,6 +48,8 @@ export async function deleteService(id: string) {
     })
     revalidatePath('/admin/services')
     revalidatePath('/services')
+    revalidatePath('/book')
+    revalidateTag('services')
     return { success: true }
   } catch {
     return { error: 'Failed to delete service' }

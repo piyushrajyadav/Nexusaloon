@@ -54,7 +54,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href='/services'>
-                <Button size='lg' variant='outline' className='text-lg px-8 py-6 rounded-full border-white text-white hover:bg-white/10'>
+                <Button size='lg' className='text-lg px-8 py-6 rounded-full bg-transparent border-2 border-white text-white hover:bg-white hover:text-black transition-all'>
                   View Services
                 </Button>
               </Link>
@@ -66,7 +66,7 @@ export default function Home() {
       {/* Features Section */}
       <section className='py-20 bg-white'>
         <div className='container mx-auto px-4'>
-          <motion.div 
+          <motion.div
             variants={stagger}
             initial='initial'
             whileInView='animate'
@@ -97,7 +97,7 @@ export default function Home() {
             <h2 className='text-3xl md:text-4xl font-bold mb-4'>Our Signature Services</h2>
             <p className='text-gray-600 max-w-2xl mx-auto'>Discover our range of premium treatments designed to rejuvenate your body and mind.</p>
           </div>
-          
+
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6'>
             {[
               { title: 'Hair Styling', img: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=2069&auto=format&fit=crop' },
@@ -105,7 +105,7 @@ export default function Home() {
               { title: 'Manicure', img: 'https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=2070&auto=format&fit=crop' },
               { title: 'Makeup', img: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=2070&auto=format&fit=crop' }
             ].map((service, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 whileHover={{ y: -10 }}
                 className='group relative h-[400px] rounded-2xl overflow-hidden cursor-pointer'
@@ -125,7 +125,7 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
-          
+
           <div className='text-center mt-12'>
             <Link href='/services'>
               <Button variant='outline' size='lg' className='rounded-full px-8'>View All Services</Button>
@@ -164,7 +164,7 @@ export default function Home() {
       {/* CTA Section */}
       <section className='py-24 bg-slate-900 text-white relative overflow-hidden'>
         <div className='absolute inset-0 opacity-20'>
-           <Image
+          <Image
             src='https://images.unsplash.com/photo-1600948836101-f9ffda59d250?q=80&w=2036&auto=format&fit=crop'
             alt='Background'
             fill

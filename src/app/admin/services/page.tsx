@@ -7,8 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { Badge } from '@/components/ui/badge'
 import { AddServiceButton } from './add-button'
 import { DeleteServiceButton } from './delete-button'
+import { Scissors } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,25 +25,41 @@ export default async function AdminServicesPage() {
         <h1 className="text-3xl font-bold">Services Management</h1>
         <AddServiceButton />
       </div>
-      
+
       <div className="rounded-md border bg-white">
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead className="w-16">Image</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Duration</TableHead>
               <TableHead className="text-right">Price</TableHead>
+              <TableHead>Status</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {services.map((service) => (
               <TableRow key={service.id}>
+                <TableCell>
+                  {service.imageUrl ? (
+                    <img src={service.imageUrl} alt={service.name} className="w-12 h-12 rounded object-cover" />
+                  ) : (
+                    <div className="w-12 h-12 rounded bg-slate-100 flex items-center justify-center">
+                      <Scissors className="h-5 w-5 text-slate-400" />
+                    </div>
+                  )}
+                </TableCell>
                 <TableCell className="font-medium">{service.name}</TableCell>
                 <TableCell>{service.category}</TableCell>
                 <TableCell>{service.duration} mins</TableCell>
-                <TableCell className="text-right">${Number(service.price).toFixed(2)}</TableCell>
+                <TableCell className="text-right">₹{Number(service.price).toFixed(2)}</TableCell>
+                <TableCell>
+                  <Badge variant={service.isActive ? "default" : "secondary"}>
+                    {service.isActive ? "Active" : "Inactive"}
+                  </Badge>
+                </TableCell>
                 <TableCell className="text-right">
                   <DeleteServiceButton id={service.id} />
                 </TableCell>

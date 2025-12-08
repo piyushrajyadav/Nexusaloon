@@ -3,7 +3,7 @@
 import prisma from '@/lib/prisma'
 import { createClient } from '@/utils/supabase/server'
 import { addMinutes, format, isBefore, setHours, setMinutes, startOfDay } from 'date-fns'
-import { revalidatePath, unstable_cache } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 // Helper to get authenticated user
 async function getAuthUser() {
@@ -50,27 +50,21 @@ async function getOrCreateCustomer(userId: string, email: string) {
   return user?.customer
 }
 
-export const getServices = unstable_cache(
-  async () => {
-    return await prisma.service.findMany({
-      where: { isActive: true },
-      orderBy: { name: 'asc' }
-    })
-  },
-  ['services-list'],
-  { tags: ['services'], revalidate: 3600 }
-)
+// Fetch active services - no cache to ensure fresh data
+export async function getServices() {
+  return await prisma.service.findMany({
+    where: { isActive: true },
+    orderBy: { name: 'asc' }
+  })
+}
 
-export const getStaff = unstable_cache(
-  async () => {
-    return await prisma.staff.findMany({
-      where: { isActive: true },
-      orderBy: { name: 'asc' }
-    })
-  },
-  ['staff-list'],
-  { tags: ['staff'], revalidate: 3600 }
-)
+// Fetch active staff - no cache to ensure fresh data
+export async function getStaff() {
+  return await prisma.staff.findMany({
+    where: { isActive: true },
+    orderBy: { name: 'asc' }
+  })
+}
 
 export async function getAvailableSlots(date: Date, staffId: string, serviceDuration: number) {
   // Salon hours: 9:00 AM to 8:00 PM
@@ -100,7 +94,7 @@ export async function getAvailableSlots(date: Date, staffId: string, serviceDura
 
   while (isBefore(current, end)) {
     const slotEnd = addMinutes(current, serviceDuration)
-    
+
     // Check if slot exceeds closing time
     if (isBefore(end, slotEnd)) break
 
@@ -108,7 +102,7 @@ export async function getAvailableSlots(date: Date, staffId: string, serviceDura
     const isBusy = bookings.some((booking: { startTime: Date; endTime: Date }) => {
       const bookingStart = new Date(booking.startTime)
       const bookingEnd = new Date(booking.endTime)
-      
+
       return (
         (current >= bookingStart && current < bookingEnd) || // Start overlaps
         (slotEnd > bookingStart && slotEnd <= bookingEnd) || // End overlaps
@@ -128,7 +122,7 @@ export async function getAvailableSlots(date: Date, staffId: string, serviceDura
 
 export async function createBooking(data: {
   serviceId: string
-  staffId: string
+  staffId: string | null  // null means "any available"
   date: Date
   time: string
 }) {
@@ -145,6 +139,19 @@ export async function createBooking(data: {
   const service = await prisma.service.findUnique({ where: { id: data.serviceId } })
   if (!service) return { error: 'Service not found' }
 
+  // If no staff specified, assign first available staff
+  let staffId = data.staffId
+  if (!staffId) {
+    const availableStaff = await prisma.staff.findFirst({
+      where: { isActive: true },
+      orderBy: { name: 'asc' }
+    })
+    if (availableStaff) {
+      staffId = availableStaff.id
+    }
+    // If still no staff, booking can proceed without staff assignment (for walk-in handling)
+  }
+
   const [hours, minutes] = data.time.split(':').map(Number)
   const startTime = setMinutes(setHours(data.date, hours), minutes)
   const endTime = addMinutes(startTime, service.duration)
@@ -154,7 +161,7 @@ export async function createBooking(data: {
       data: {
         customerId: customer.id,
         serviceId: data.serviceId,
-        staffId: data.staffId,
+        staffId: staffId,
         date: data.date,
         startTime,
         endTime,

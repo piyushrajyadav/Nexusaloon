@@ -60,8 +60,17 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Role-based protection logic
-  if (request.nextUrl.pathname.startsWith('/dashboard') || request.nextUrl.pathname.startsWith('/admin')) {
+  // Customer dashboard - just requires login
+  if (request.nextUrl.pathname.startsWith('/dashboard')) {
+    if (!user) {
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
+    // Allow any logged-in user to access dashboard
+    return response
+  }
+
+  // Admin routes - requires ADMIN role
+  if (request.nextUrl.pathname.startsWith('/admin')) {
     if (!user) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
@@ -78,6 +87,7 @@ export async function updateSession(request: NextRequest) {
     }
   }
 
+  // Staff routes - requires STAFF or ADMIN role
   if (request.nextUrl.pathname.startsWith('/staff')) {
     if (!user) {
       return NextResponse.redirect(new URL('/login', request.url))
