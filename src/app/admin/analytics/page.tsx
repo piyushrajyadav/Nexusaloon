@@ -52,11 +52,11 @@ export default function AnalyticsPage() {
                 getTopServices()
             ])
 
-            if (revenue.success) setRevenueStats(revenue.data)
-            if (bookings.success) setBookingStats(bookings.data)
-            if (daily.success) setDailyRevenue(daily.data)
-            if (monthly.success) setMonthlyRevenue(monthly.data)
-            if (services.success) setTopServices(services.data)
+            if (revenue.success && revenue.data) setRevenueStats(revenue.data)
+            if (bookings.success && bookings.data) setBookingStats(bookings.data)
+            if (daily.success && daily.data) setDailyRevenue(daily.data)
+            if (monthly.success && monthly.data) setMonthlyRevenue(monthly.data)
+            if (services.success && services.data) setTopServices(services.data)
 
             setLoading(false)
         }
@@ -210,7 +210,7 @@ export default function AnalyticsPage() {
                                             cx="50%"
                                             cy="50%"
                                             labelLine={false}
-                                            label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                                            label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                                             outerRadius={100}
                                             fill="#8884d8"
                                             dataKey="value"

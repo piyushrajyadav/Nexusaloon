@@ -19,7 +19,7 @@ import { createManualInvoice, getCustomersAndServices } from './actions'
 import { toast } from 'sonner'
 
 type Customer = { id: string; name: string; phone?: string | null; user: { email: string } }
-type Service = { id: string; name: string; price: number | string }
+type Service = { id: string; name: string; price: number }
 
 export function CreateInvoiceButton() {
   const [open, setOpen] = useState(false)
@@ -44,7 +44,12 @@ export function CreateInvoiceButton() {
       setDataLoading(true)
       getCustomersAndServices().then((data) => {
         setCustomers(data.customers)
-        setServices(data.services)
+        // Convert Decimal prices to numbers
+        setServices(data.services.map(s => ({
+          id: s.id,
+          name: s.name,
+          price: Number(s.price)
+        })))
         setDataLoading(false)
       })
     }
@@ -139,7 +144,7 @@ export function CreateInvoiceButton() {
                   </div>
                 ) : customers.length === 0 ? (
                   <p className="text-sm text-muted-foreground text-center py-4">
-                    No customers found. Use "New / Walk-in" tab to create one.
+                    No customers found. Use the New / Walk-in tab to create one.
                   </p>
                 ) : (
                   <div className="space-y-2">

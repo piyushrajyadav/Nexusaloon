@@ -61,8 +61,14 @@ export default function OffersPage() {
 
     async function loadOffers() {
         const result = await getOffers()
-        if (result.success) {
-            setOffers(result.data || [])
+        if (result.success && result.data) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const formattedOffers = result.data.map((offer: any) => ({
+                ...offer,
+                discountPct: offer.discountPct ? Number(offer.discountPct) : null,
+                flatAmount: offer.flatAmount ? Number(offer.flatAmount) : null
+            }))
+            setOffers(formattedOffers)
         }
         setLoading(false)
     }

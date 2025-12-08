@@ -3,7 +3,6 @@
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { PaymentStatus, PaymentMethod } from '@prisma/client'
-import { getSalonSettings } from '@/app/actions/admin-settings'
 
 export async function getInvoiceById(id: string) {
     try {
