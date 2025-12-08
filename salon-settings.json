@@ -1,10 +1,10 @@
 {
   "salonName": "NexuSalon",
-  "salonAddress": "123 Beauty Street, Fashion District",
-  "salonCity": "Mumbai, Maharashtra 400001",
+  "salonAddress": "new town , ab block ",
+  "salonCity": "kolkata , west bengal , 700102",
   "salonPhone": "+91 98765 43210",
   "salonEmail": "info@nexusalon.com",
-  "salonWebsite": "www.nexusalon.com",
+  "salonWebsite": "www.nexusalon.app",
   "gstNumber": "GST27AABCT1234D1ZD",
   "gstRate": 18,
   "invoicePrefix": "INV",

@@ -319,7 +319,7 @@ export default function SettingsClient({ userId }: SettingsClientProps) {
           <CardHeader>
             <CardTitle>Business Hours</CardTitle>
             <CardDescription>
-              Set your salon's operating hours for online bookings.
+              Set your salon&apos;s operating hours for online bookings.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
