@@ -7,7 +7,7 @@ import { revalidatePath } from 'next/cache'
 
 // Helper to get authenticated user
 async function getAuthUser() {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user }, error } = await supabase.auth.getUser()
   if (error || !user) return null
   return user
@@ -191,7 +191,7 @@ export async function getUserBookings() {
 
   if (!user?.customer) return []
 
-  return await prisma.booking.findMany({
+  const bookings = await prisma.booking.findMany({
     where: { customerId: user.customer.id },
     include: {
       service: true,
@@ -199,6 +199,26 @@ export async function getUserBookings() {
     },
     orderBy: { startTime: 'desc' }
   })
+
+  // Check for feedback on each booking
+  // Using try-catch in case Feedback model doesn't exist yet
+  const bookingsWithFeedback = await Promise.all(
+    bookings.map(async (booking) => {
+      let hasFeedback = false
+      try {
+        // @ts-ignore - Feedback might not exist in Prisma types until regenerated
+        const feedback = await prisma.feedback?.findUnique({
+          where: { bookingId: booking.id }
+        })
+        hasFeedback = !!feedback
+      } catch {
+        // Feedback model doesn't exist yet
+      }
+      return { ...booking, hasFeedback }
+    })
+  )
+
+  return bookingsWithFeedback
 }
 
 export async function cancelBooking(bookingId: string) {

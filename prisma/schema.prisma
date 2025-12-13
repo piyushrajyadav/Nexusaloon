@@ -64,8 +64,9 @@ model Customer {
   address       String?
   loyaltyPoints Int     @default(0)
 
-  bookings Booking[]
-  invoices Invoice[]
+  bookings  Booking[]
+  invoices  Invoice[]
+  feedbacks Feedback[]
 
   membershipId String?
   membership   Membership? @relation(fields: [membershipId], references: [id])
@@ -123,7 +124,8 @@ model Booking {
   serviceId String
   service   Service @relation(fields: [serviceId], references: [id])
 
-  invoice Invoice?
+  invoice  Invoice?
+  feedback Feedback?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -235,4 +237,15 @@ model Notification {
   type    String
 
   createdAt DateTime @default(now())
+}
+
+model Feedback {
+  id         String   @id @default(uuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+  bookingId  String   @unique
+  booking    Booking  @relation(fields: [bookingId], references: [id])
+  rating     Int      // 1-5 stars
+  comment    String?
+  createdAt  DateTime @default(now())
 }

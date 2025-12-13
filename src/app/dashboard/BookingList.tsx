@@ -19,12 +19,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { FeedbackForm } from './FeedbackForm'
 
 type Booking = {
   id: string
   date: Date
   startTime: Date
   status: string
+  hasFeedback?: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   service: { name: string; price: any; duration: number }
   staff: { name: string } | null
@@ -143,9 +145,19 @@ export default function BookingList({ bookings }: { bookings: Booking[] }) {
                   <p className="text-sm text-gray-500">{format(new Date(booking.date), 'MMM do, yyyy')} • {format(new Date(booking.startTime), 'h:mm a')}</p>
                 </div>
               </div>
-              <Badge variant={booking.status === 'CANCELLED' ? 'destructive' : 'secondary'}>
-                {booking.status}
-              </Badge>
+              <div className="flex items-center gap-3">
+                {/* Feedback button for completed bookings */}
+                {booking.status === 'COMPLETED' && (
+                  <FeedbackForm
+                    bookingId={booking.id}
+                    serviceName={booking.service.name}
+                    hasFeedback={booking.hasFeedback || false}
+                  />
+                )}
+                <Badge variant={booking.status === 'CANCELLED' ? 'destructive' : 'secondary'}>
+                  {booking.status}
+                </Badge>
+              </div>
             </div>
           ))}
         </div>

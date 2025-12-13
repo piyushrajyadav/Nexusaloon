@@ -14,7 +14,8 @@ import {
   Menu,
   X,
   TrendingUp,
-  Gift
+  Gift,
+  MessageSquare
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
@@ -31,6 +32,7 @@ const sidebarItems = [
   { icon: FileText, label: 'Invoices', href: '/admin/invoices' },
   { icon: TrendingUp, label: 'Analytics', href: '/admin/analytics' },
   { icon: Gift, label: 'Offers', href: '/admin/offers' },
+  { icon: MessageSquare, label: 'Feedbacks', href: '/admin/feedbacks' },
   { icon: Settings, label: 'Settings', href: '/admin/settings' },
 ]
 
