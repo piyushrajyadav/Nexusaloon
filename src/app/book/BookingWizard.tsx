@@ -156,6 +156,7 @@ export default function BookingWizard({ services, staffList }: { services: Servi
                         {/* Service Image */}
                         {service.imageUrl ? (
                           <div className="w-28 h-28 flex-shrink-0">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={service.imageUrl}
                               alt={service.name}

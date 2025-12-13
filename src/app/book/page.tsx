@@ -4,7 +4,7 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
 export default async function BookPage() {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
@@ -21,7 +21,7 @@ export default async function BookPage() {
           <h1 className="text-4xl font-bold mb-4">Book Your Appointment</h1>
           <p className="text-gray-600">Select your preferred service, stylist, and time.</p>
         </div>
-        
+
         <BookingWizard services={services} staffList={staffList} />
       </div>
     </div>

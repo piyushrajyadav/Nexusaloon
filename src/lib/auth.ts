@@ -2,7 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 
 export async function getSession() {
-  const supabase = createClient()
+  const supabase = await createClient()
   try {
     const {
       data: { user },
@@ -18,7 +18,7 @@ export async function getUserRole() {
   const user = await getSession()
   if (!user) return null
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: dbUser } = await supabase
     .from('User')
     .select('role')

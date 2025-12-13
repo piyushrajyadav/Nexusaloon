@@ -1,5 +1,5 @@
 import { getAllFeedbacks } from '@/app/actions/feedback'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Star, MessageSquare, User, Scissors, Calendar } from 'lucide-react'
 import { format } from 'date-fns'

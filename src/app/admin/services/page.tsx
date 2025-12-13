@@ -44,6 +44,7 @@ export default async function AdminServicesPage() {
               <TableRow key={service.id}>
                 <TableCell>
                   {service.imageUrl ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
                     <img src={service.imageUrl} alt={service.name} className="w-12 h-12 rounded object-cover" />
                   ) : (
                     <div className="w-12 h-12 rounded bg-slate-100 flex items-center justify-center">

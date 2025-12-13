@@ -206,7 +206,6 @@ export async function getUserBookings() {
     bookings.map(async (booking) => {
       let hasFeedback = false
       try {
-        // @ts-ignore - Feedback might not exist in Prisma types until regenerated
         const feedback = await prisma.feedback?.findUnique({
           where: { bookingId: booking.id }
         })

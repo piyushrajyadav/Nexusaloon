@@ -164,6 +164,7 @@ export function AddServiceButton() {
 
                 {imagePreview || imageUrl ? (
                   <div className="relative rounded-lg overflow-hidden border">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={imagePreview || imageUrl}
                       alt="Preview"
