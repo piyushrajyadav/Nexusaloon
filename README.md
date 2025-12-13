@@ -21,4 +21,5 @@ A complete single salon management system built with Next.js 14, Supabase, Prism
 - **Admin Dashboard:** Analytics and management.
 - **Staff Portal:** View upcoming appointments.
 
-# Nexusaloon
+# Nexu salon powered by NexuSoftWorks
+
