@@ -195,27 +195,17 @@ export async function getUserBookings() {
     where: { customerId: user.customer.id },
     include: {
       service: true,
-      staff: true
+      staff: true,
+      feedback: true
     },
     orderBy: { startTime: 'desc' }
   })
 
-  // Check for feedback on each booking
-  // Using try-catch in case Feedback model doesn't exist yet
-  const bookingsWithFeedback = await Promise.all(
-    bookings.map(async (booking) => {
-      let hasFeedback = false
-      try {
-        const feedback = await prisma.feedback?.findUnique({
-          where: { bookingId: booking.id }
-        })
-        hasFeedback = !!feedback
-      } catch {
-        // Feedback model doesn't exist yet
-      }
-      return { ...booking, hasFeedback }
-    })
-  )
+  // Map bookings to include hasFeedback flag
+  const bookingsWithFeedback = bookings.map((booking) => ({
+    ...booking,
+    hasFeedback: !!booking.feedback
+  }))
 
   return bookingsWithFeedback
 }
